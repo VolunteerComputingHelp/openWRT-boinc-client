@@ -1,0 +1,15 @@
+Index: boinc-app-tngrid-0.0.1/src/Makefile
+===================================================================
+--- boinc-app-tngrid-0.0.1.orig/src/Makefile
++++ boinc-app-tngrid-0.0.1/src/Makefile
+@@ -56,6 +56,10 @@ $(EXECUTABLE): $(OBJECTS)
+ clean:
+ 	rm -rf ../bin/$(EXECUTABLE) *.o *~ *.d
+ 
++install: $(EXECUTABLE)
++	mkdir -p $(DESTDIR)/usr/lib/boinc-app-tngrid/bin
++	cp -r ../*.sh ../input ../output ../bin $(DESTDIR)/usr/lib/boinc-app-tngrid
++
+ .PHONY: all clean
+ 
+ -include $(CXXSOURCES:.cpp=.d) $(CSOURCES:.c=.d)
