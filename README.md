@@ -1,4 +1,4 @@
-OpenWRT BOINC client feed
+OpenWrt BOINC client feed
 =========================
 
 This repository supports the synchronisation of developments in support
