@@ -10,11 +10,11 @@ PKG_VERSION:=7.16.5
 PKG_VERSION_SHORT:=$(shell echo $(PKG_VERSION)| cut -f1,2 -d.)
 PKG_RELEASE:=1
 
-#PKG_SOURCE_URL:=@GITHUB/boinc/client_release/$(PKG_VERSION_SHORT)/
-PKG_SOURCE_URL:=https://github.com/BOINC/boinc/archive/client_release/$(shell echo $(PKG_VERSION))/
-PKG_SOURCE:=$(PKG_VERSION).tar.gz
-#MD5#PKG_HASH:=9a4a14cf2ef7ea9850d81ceac4adae9c
-PKG_HASH:=33db60991b253e717c6124cce4750ae7729eaab4e54ec718b9e37f87012d668a
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/BOINC/boinc
+PKG_SOURCE_DATE:=2020-02-25
+PKG_SOURCE_VERSION:=fbdcc2d6165f0a3897341852f0fcf91a934724d0
+PKG_MIRROR_HASH:=f5ad881db7fafd6fc2c5360049d4f9c95c27d41641f5a77405d7df1514ecbc9f
 
 PKG_MAINTAINER:=
 PKG_CPE_ID:=cpe:/a:boinc_project:boinc
@@ -60,22 +60,6 @@ $(call Package/boinc/Default/description)
  machine from the BOINC Manager of your desktop computer.
 endef
 
-define Build/Prepare
-	$(PKG_UNPACK)
-	if [ -d $(PKG_BUILD_DIR)/boinc-$(PKG_VERSION) ]; then \
-		echo "I: Moving source tree to: $(PKG_BUILD_DIR)" ; \
-		mv boinc-client_release-$(PKG_VERSION_SHORT)-$(PKG_VERSION)/* $(PKG_BUILD_DIR)/ ; \
-		rmdir boinc-client_release-$(PKG_VERSION_SHORT)-$(PKG_VERSION) ; \
-	elif [ -d $(PKG_BUILD_DIR)/../boinc-$(PKG_VERSION) ]; then \
-		echo "I: B Moving source tree to: $(PKG_BUILD_DIR)" ; \
-		mv $(PKG_BUILD_DIR)/../boinc-client_release-7.16-7.16.5/* $(PKG_BUILD_DIR)/ ; \
-		rm -rf ../boinc-client_release-$(PKG_VERSION_SHORT)-$(PKG_VERSION) ; \
-	else \
-		echo "E: Cannot find source tree" ; \
-		echo "E: PKG_BUILD_DIR: $(PKG_BUILD_DIR)" ; \
-		exit 1 ; \
-	fi
-endef
 
 CONFIGURE_ARGS += \
 	--disable-server --disable-manager --enable-client --enable-libraries --disable-boinczip --enable-install-headers --enable-dynamic-client-linkage
