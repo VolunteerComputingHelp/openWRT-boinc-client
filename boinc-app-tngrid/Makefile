@@ -39,7 +39,7 @@ define Package/boinc-app-tngrid
   $(call Package/boinc-app-tngrid/Default)
   SUBMENU:=Computation
   TITLE:=TN-GRID app
-  DEPENDS:=+boinc +c-ares
+  DEPENDS:=+boinc +libcares
   LICENSE:=GPL-3.0-or-later
   LICENSE_FILES:=Readme.md
 endef
