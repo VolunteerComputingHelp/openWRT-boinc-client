@@ -74,6 +74,7 @@ define Build/Compile
                       STRIP=$(TARGET_CROSS)strip \
 	              LDFLAGS=$(LDFLAGS) \
 	  	      CPPFLAGS="$(CPPFLAGS) -I. -I../boinc_stub/api -Isimd" \
+	  	      LDLIBBZ2="$(wildcard $(TOPDIR)/staging_dir/target-*/usr/lib/)/libbz2.a" \
 	              BOINC_DIR="$(wildcard $(TOPDIR)/staging_dir/target-*/usr/include/boinc/ )" \
 	              BOINC_API_DIR="$(wildcard $(TOPDIR)/staging_dir/target-*/usr/include/boinc/ )" \
 	              BOINC_LIB_DIR="$(wildcard $(TOPDIR)/staging_dir/target-*/usr/lib/ )"
