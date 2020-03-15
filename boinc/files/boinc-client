@@ -1,0 +1,60 @@
+#!/bin/sh /etc/rc.common
+
+START=10
+STOP=15
+
+BOINCEXE_NAME=boinc_client
+BOINCDIR=/opt/boinc/
+
+start() {
+   PID=$( pidof $BOINCEXE_NAME )
+   if ! [ -z "$PID" ]; then
+      echo "ERROR: Another instance of BOINC is running PID=${PID}"
+      return 2
+   fi
+
+   if ! [ -d "$BOINCDIR" ]; then
+      echo -n "Creating $BOINCDIR..."
+      if mkdir -p $BOINCDIR 2>/dev/null ; then
+         echo "[OK]"
+      else
+         echo "[FAILED]"
+         return 1
+      fi
+   fi
+
+
+   cd $BOINCDIR
+   echo "Starting Boinc-client..."
+   ${BOINCEXE_NAME} 2>/dev/null > /dev/null &
+
+   return 0
+}
+
+stop() {
+   PID=$( pidof $BOINCEXE_NAME )
+   if ! [ -z "$PID" ]; then
+      kill $PID
+      sleep 10
+
+      PID=$( pidof $BOINCEXE_NAME )
+      if ! [ -z "$PID" ]; then
+         echo "ERROR: There is still a instance of BOINC runnig! PID=${PID}"
+         return 1;
+      fi
+      return 0;
+
+   else
+      echo "Boinc is not running."
+      return 1
+   fi
+}
+
+restart() {
+   if ! stop ; then
+      echo "BOINC is not running."
+   fi
+
+   start
+}
+

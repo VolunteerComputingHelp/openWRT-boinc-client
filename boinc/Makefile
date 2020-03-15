@@ -79,10 +79,9 @@ define Package/boinc/install
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/* $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/*.{la,so}* $(1)/usr/lib/
-	$(INSTALL_DIR) $(1)/etc
-	$(CP) -r $(PKG_INSTALL_DIR)/etc/* $(1)/etc/
-	$(INSTALL_DIR) $(1)/lib/systemd/system
-	$(CP) $(PKG_INSTALL_DIR)/lib/systemd/system/* $(1)/lib/systemd/system
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/boinc-client $(1)/etc/init.d/boinc-client
+	$(INSTALL_DIR) $(1)/opt/boinc
 endef
 
 $(eval $(call BuildPackage,boinc))
