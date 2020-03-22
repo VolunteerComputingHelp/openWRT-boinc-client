@@ -35,24 +35,25 @@ stop() {
    PID=$( pidof $BOINCEXE_NAME )
    if ! [ -z "$PID" ]; then
       kill $PID
+      echo -n "I: Stopping BOINC with PID $PID... "
       sleep 10
 
       PID=$( pidof $BOINCEXE_NAME )
       if ! [ -z "$PID" ]; then
-         echo "ERROR: There is still a instance of BOINC runnig! PID=${PID}"
+	 echo " [FAILED]"
          return 1;
       fi
+      echo " [OK]"
       return 0;
-
    else
-      echo "Boinc is not running."
-      return 1
+      echo "I: Boinc was not running."
+      return 0
    fi
 }
 
 restart() {
    if ! stop ; then
-      echo "BOINC is not running."
+      echo "E: BOINC could not be stopped."
    fi
 
    start
