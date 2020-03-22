@@ -52,10 +52,10 @@ stop() {
 }
 
 restart() {
-   if ! stop ; then
+   if stop ; then
+      start
+   else
       echo "E: BOINC could not be stopped."
    fi
-
-   start
 }
 
