@@ -82,6 +82,7 @@ define Package/boinc/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/boinc-client $(1)/etc/init.d/boinc-client
 	$(INSTALL_DIR) $(1)/opt/boinc
+	$(CP) ./files/global_prefs_override.xml $(1)/opt/boinc/global_prefs_override.xml
 endef
 
 $(eval $(call BuildPackage,boinc))
