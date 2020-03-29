@@ -24,6 +24,7 @@ PKG_BUILD_PARALLEL:=0
 PKG_FIXUP:=autoreconf
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/target.mk
 
 define Package/boinc/Default
   SECTION:=net
@@ -62,7 +63,9 @@ endef
 
 
 CONFIGURE_ARGS += \
-	--disable-server --disable-manager --enable-client --enable-libraries --disable-boinczip --enable-install-headers --enable-dynamic-client-linkage
+	--disable-server --disable-manager --enable-client --enable-libraries \
+	--disable-boinczip --enable-install-headers --enable-dynamic-client-linkage \
+	--with-boinc-platform=$(REAL_GNU_TARGET_NAME) --with-boinc-alt-platform=$(ARCH)-$(BOARD)-$(DEVICE_TYPE)-openwrt-$(TARGET_SUFFIX)
 
 define Build/InstallDev
 	echo "*** BOINC *** InstallDev ***"
