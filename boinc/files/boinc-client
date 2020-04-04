@@ -5,6 +5,8 @@ STOP=15
 
 BOINCEXE_NAME=boinc_client
 BOINCDIR=/opt/boinc/
+BOINCUSR=boinc
+BOINCEXE_OPTS="--check_all_logins --redirectio --dir $BOINCDIR"
 
 start() {
    PID=$( pidof $BOINCEXE_NAME )
@@ -14,7 +16,7 @@ start() {
    fi
 
    if ! [ -d "$BOINCDIR" ]; then
-      echo -n "Creating $BOINCDIR..."
+      echo -n "Creating $BOINCDIR... "
       if mkdir -p $BOINCDIR 2>/dev/null ; then
          echo "[OK]"
       else
@@ -23,27 +25,53 @@ start() {
       fi
    fi
 
+   echo -n "Checking owner of $BOINCDIR... "
+   BOINCDIR_OWNER="$(ls -ld $BOINCDIR | awk '{print $3}')"
+   if [ "$BOINCUSR" = "$BOINCDIR_OWNER" ] ; then
+      echo "[OK]" 
+   else
+      echo "[FAILED]"
+
+      echo -n "Trying to fix owner... "
+      chown -R $BOINCUSR:$BOINCUSR $BOINCDIR
+      BOINCDIR_OWNER="$(ls -ld $BOINCDIR | awk '{print $3}')"
+      if [ "$BOINCUSR" = "$BOINCDIR_OWNER" ] ; then
+         echo "[OK]"
+      else
+         echo "[FAILED]"
+         return 3
+      fi
+   fi
 
    cd $BOINCDIR
-   echo "Starting Boinc-client..."
-   ${BOINCEXE_NAME} 2>/dev/null > /dev/null &
+   echo -n "Starting Boinc-client... "
+   start-stop-daemon -S -q -b -c $BOINCUSR:$BOINCUSR \
+                     -x $BOINCEXE_NAME -- $BOINCEXE_OPTS
 
-   return 0
+   PID=$( pidof $BOINCEXE_NAME )
+   if ! [ -z "$PID" ]; then
+      echo "[OK]"
+      return 0
+   else
+      echo "[FAILED]"
+      return 4
+   fi
 }
 
 stop() {
    PID=$( pidof $BOINCEXE_NAME )
    if ! [ -z "$PID" ]; then
-      kill $PID
-      echo -n "I: Stopping BOINC with PID $PID... "
+      start-stop-daemon -K -q -x $BOINCEXE_NAME
+
+      echo -n "Stopping BOINC... "
       sleep 10
 
       PID=$( pidof $BOINCEXE_NAME )
       if ! [ -z "$PID" ]; then
-	 echo " [FAILED]"
+	 echo "[FAILED]"
          return 1;
       fi
-      echo " [OK]"
+      echo "[OK]"
       return 0;
    else
       echo "I: Boinc was not running."

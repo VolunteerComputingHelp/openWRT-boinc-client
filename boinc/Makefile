@@ -45,6 +45,7 @@ define Package/boinc
   SUBMENU:=Computation
   TITLE:=BOINC client
   DEPENDS:=+curl +bzip2 +libstdcpp +libopenssl +zlib
+  USERID:=boinc:boinc
   LICENSE:=GPL-3.0-or-later
   LICENSE_FILES:=COPYING
 endef
