@@ -51,22 +51,28 @@ start() {
 }
 
 stop() {
+   echo -n "Stopping BOINC... "
+
    PID=$( pidof $BOINCEXE_NAME )
    if ! [ -z "$PID" ]; then
       start-stop-daemon -K -q -x $BOINCEXE_NAME
 
-      echo -n "Stopping BOINC... "
-      sleep 10
 
-      PID=$( pidof $BOINCEXE_NAME )
-      if ! [ -z "$PID" ]; then
-	 echo "[FAILED]"
-         return 1;
-      fi
+      i=0
+      while pidof "$BOINCEXE_NAME" >/dev/null; do
+         if [ $i = '60' ]; then
+            echo "[FAILED]"
+            return 1
+         fi
+         i=$(($i+1))
+         sleep 1
+      done
+
       echo "[OK]"
-   else
+    else
       echo "[was not running]"
     fi
+
     return 0
 }
 
