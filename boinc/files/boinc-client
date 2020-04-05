@@ -1,7 +1,7 @@
 #!/bin/sh /etc/rc.common
 
-START=10
-STOP=15
+START=99
+STOP=0
 
 BOINCEXE_NAME=boinc_client
 BOINCDIR=/opt/boinc/
