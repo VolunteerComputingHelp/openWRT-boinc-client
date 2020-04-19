@@ -13,9 +13,9 @@ PKG_VERSION:=0.0.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_URL:=https://bitbucket.org/francesco-asnicar/pc-boinc/get/
-PKG_SOURCE:=5371d4dbff7b.tar.gz
+PKG_SOURCE:=2289f23f676f.zip
 #MD5#PKG_HASH:=9a4a14cf2ef7ea9850d81ceac4adae9c
-PKG_HASH:=11d3aec2f4049a08d817dec29574d95774468ec5b8487c9d5468bba3a0ca37cd
+PKG_HASH:=b1345b821e6593c95b8a1da00954ce898e3de0e6856a355da35fadbbb20a1331
 
 PKG_MAINTAINER:=Steffen Moeller <moeller@debian.org>
 PKG_CPE_ID:=cpe:/a:boinc_project:tngrid
@@ -25,18 +25,10 @@ PKG_BUILD_PARALLEL:=0
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/boinc-app-tngrid/Default
+define Package/boinc-app-tngrid
   SECTION:=net
   CATEGORY:=Network
   URL:=https://bitbucket.org/francesco-asnicar/pc-boinc.git
-endef
-
-define Package/boinc-app-tngrid/Default/description
-  This package is only or internal use. It provides the binary for the TN-GRID BOINC project.
-endef
-
-define Package/boinc-app-tngrid
-  $(call Package/boinc-app-tngrid/Default)
   SUBMENU:=Computation
   TITLE:=TN-GRID app
   DEPENDS:=+boinc +libcares
@@ -45,7 +37,7 @@ define Package/boinc-app-tngrid
 endef
 
 define Package/boinc-app-tngrid/description
-$(call Package/boinc-app-tngrid/Default/description)
+  This package is only or internal use. It provides the binary for the TN-GRID BOINC project.
 endef
 
 define Build/Prepare
