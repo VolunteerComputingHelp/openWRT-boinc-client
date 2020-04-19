@@ -1,0 +1,13 @@
+Index: boinc-app-tngrid-0.0.1/src/Makefile
+===================================================================
+--- boinc-app-tngrid-0.0.1.orig/src/Makefile
++++ boinc-app-tngrid-0.0.1/src/Makefile
+@@ -23,7 +23,7 @@ BOINC_DIR ?= ../../..
+ BOINC_API_DIR ?= $(BOINC_DIR)/api
+ BOINC_LIB_DIR ?= $(BOINC_DIR)/lib
+ BOINC_ZIP_DIR ?= $(BOINC_DIR)/zip
+-BOINC_LIBS ?= $(BOINC_API_DIR)/libboinc_api.a $(BOINC_LIB_DIR)/libboinc.a
++BOINC_LIBS ?= $(BOINC_LIB_DIR)/libboinc_api.a $(BOINC_LIB_DIR)/libboinc.a
+ 
+ ifdef BOINC_STUB
+ BOINC_DIR = ../boinc_stub
