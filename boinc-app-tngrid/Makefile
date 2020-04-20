@@ -48,9 +48,8 @@ define Build/Prepare
 	$(Build/Patch)
 endef
 
-#LDLIBBZ2="$(wildcard $(TOPDIR)/staging_dir/target-*/usr/lib/)/libbz2.a";
 LDLIBBZ2="-lbz2"
-BOINC_API_DIR=$(wildcard $(TOPDIR)/staging_dir/target-*/usr/include/boinc/ )
+BOINC_API_DIR=$(wildcard $(TOPDIR)/staging_dir/$(TARGET_DIR_NAME)/usr/include/boinc/ )
 define Build/Compile
 	# executing from /home/me/openwrt/sdk/build_dir/target-arm_cortex-a9+vfpv3_musl_eabi/boinc-app-tngrid-0.0.1/src
 	echo "*** TN-GRID *** BUILDING ($(shell pwd)) ***"
@@ -70,9 +69,9 @@ define Build/Compile
 	              LDFLAGS=$(LDFLAGS) \
 	  	      CPPFLAGS="$(CPPFLAGS) -I$(BOINC_API_DIR) -I. -Isimd" \
 	  	      LDLIBBZ2="$(LDLIBBZ2)" \
-	              BOINC_DIR="$(wildcard $(TOPDIR)/staging_dir/target-*/usr/include/boinc/ )" \
+		      BOINC_DIR="$(wildcard $(TOPDIR)/staging_dir/$(TARGET_DIR_NAME)/usr/include/boinc/ )" \
 	              BOINC_API_DIR="$(BOINC_API_DIR)" \
-	              BOINC_LIB_DIR="$(wildcard $(TOPDIR)/staging_dir/target-*/usr/lib/ )"
+		      BOINC_LIB_DIR="$(wildcard $(TOPDIR)/staging_dir/$(TARGET_DIR_NAME)/usr/lib/ )"
 endef
 
 define Build/Install
