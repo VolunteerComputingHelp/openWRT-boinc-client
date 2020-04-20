@@ -14,5 +14,21 @@ https://github.com/openwrt/packages/tree/master/net/boinc.
 
 To contribute, you need the OpenWRT SDK for your target platform and
 preferably also for X86_64 to test quickly on an OpenWrt instance under
-Virtualbox. This git repository o a local clone of it we suggest to
+Virtualbox. This git repository or a local clone of it we suggest to
 add as a custom feed to your SDK.
+
+
+boinc-app-tngrid
+----------------
+
+This package provices the scientific app for [TN-GRID](http://gene.disi.unitn.it/test/).
+OpenWrt platforms the project already supports can be inspected [here](https://gene.disi.unitn.it/test/apps.php)
+
+The package was successfully tested on 
+ * x86_64
+ 
+Please create an issue to request packages for additional OpenWrt platforms.
+The binary created by this packages cannot be distributed by the project
+until a
+[patch](https://github.com/VolunteerComputingHelp/openWRT-boinc-client/tree/master/boinc-app-tngrid)
+providing a static library for bzip2 is accepted by OpenWrt.
